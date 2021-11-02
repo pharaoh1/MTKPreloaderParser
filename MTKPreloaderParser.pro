@@ -49,8 +49,3 @@ HEADERS += \
     cidparser.h \
     structures.h
 
-
-win32:RC_FILE += MTKPreloaderParser.rc
-
-RESOURCES += \
-    MTKPreloaderParser.qrc
