@@ -1,6 +1,5 @@
 # MTKPreloaderParser
- MTK Preloader Parser V3
- Simple tool to parse mtk =>  
+ Simple tool to parse mtk
  - Preloader File. 
  - BLoader Info. 
  - eMMC Boot1 Region. 
