@@ -1,14 +1,15 @@
 # MTKPreloaderParser
  MTK Preloader Parser V3
  Simple tool to parse mtk =>  
- - Preloader File. - BLoader Info. 
+ - Preloader File. 
+ - BLoader Info. 
  - eMMC Boot1 Region. 
  - UFS LUN0 Region.
  - and read the following details:
  - detailed info about supported flash IDs by the given file. 
  - detailed info about eMMC/UFS ID (cid, vendorID - sub_FlashID - manufacturer date, etc). 
  - detailed info about DRAM'S by the desired ID (RAM type - RAM size). 
- - Supported preloader versions:  
+Supported preloader versions:  
  - MTK_BLOADER_INFO_v08 
  - MTK_BLOADER_INFO_v10 
  - MTK_BLOADER_INFO_v11 
@@ -39,7 +40,7 @@
  - MTK_BLOADER_INFO_v49
  - MTK_BLOADER_INFO_v51
  - MTK_BLOADER_INFO_v52
- - supported DRAMs: 
+Supported DRAMs: 
  - Discrete DDR1 
  - Discrete LPDDR2
  - Discrete LPDDR3
