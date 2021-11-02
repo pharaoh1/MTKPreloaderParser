@@ -48,7 +48,7 @@ typedef struct EMIInfoV10
         union {
             quint dramc0[17];
         };
-        quint m_dram_rank_size[4]{1024*0124}; //FIX_ME
+        quint m_dram_rank_size[4]{1024*0124}; //TODO
     } emi_cfg;
 public:
     unsigned int emi_len[46];
