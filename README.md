@@ -1,2 +1,58 @@
 # MTKPreloaderParser
- MTK Preloader Parser V3: Release date 02:11:2021. exe + qt source code available.  Simple tool to parse mtk =>  - Preloader File. - BLoader Info. - eMMC Boot1 Region. - UFS LUN0 Region. and read the following details: - detailed info about supported flash IDs by the given file. - detailed info about eMMC/UFS ID (cid, vendorID - sub_FlashID - manufacturer date, etc). - detailed info about DRAM'S by the desired ID (RAM type - RAM size).  Supported preloader versions:  MTK_BLOADER_INFO_v08 MTK_BLOADER_INFO_v10 MTK_BLOADER_INFO_v11 MTK_BLOADER_INFO_v12 MTK_BLOADER_INFO_v13 MTK_BLOADER_INFO_v14 MTK_BLOADER_INFO_v15 MTK_BLOADER_INFO_v16 MTK_BLOADER_INFO_v17 MTK_BLOADER_INFO_v20 MTK_BLOADER_INFO_v21 MTK_BLOADER_INFO_v22 MTK_BLOADER_INFO_v24 MTK_BLOADER_INFO_v25 MTK_BLOADER_INFO_v27 MTK_BLOADER_INFO_v28 MTK_BLOADER_INFO_v30 MTK_BLOADER_INFO_v31 MTK_BLOADER_INFO_v32 MTK_BLOADER_INFO_v35 MTK_BLOADER_INFO_v36 MTK_BLOADER_INFO_v38 MTK_BLOADER_INFO_v39 MTK_BLOADER_INFO_v40 MTK_BLOADER_INFO_v45 MTK_BLOADER_INFO_v46 MTK_BLOADER_INFO_v47 MTK_BLOADER_INFO_v49 MTK_BLOADER_INFO_v51 MTK_BLOADER_INFO_v52  supported DRAMs:  Discrete DDR1 Discrete LPDDR2 Discrete LPDDR3 Discrete PCDDR3 MCP(NAND+DDR1) MCP(NAND+LPDDR2) MCP(NAND+LPDDR3) MCP(NAND+PCDDR3) MCP(eMMC+DDR1) MCP(eMMC+LPDDR2) MCP(eMMC+LPDDR3) MCP(eMMC+PCDDR3) MCP(eMMC+LPDDR4) MCP(eMMC+LPDR4X) uMCP(eUFS+LPDDR4X)
+ MTK Preloader Parser V3
+ Simple tool to parse mtk =>  
+ - Preloader File. 
+ - BLoader Info. 
+ - eMMC Boot1 Region. 
+ - UFS LUN0 Region.
+ - and read the following details:
+ - detailed info about supported flash IDs by the given file. 
+ - detailed info about eMMC/UFS ID (cid, vendorID - sub_FlashID - manufacturer date, etc). 
+ - detailed info about DRAM'S by the desired ID (RAM type - RAM size). 
+Supported preloader versions:  
+ - MTK_BLOADER_INFO_v08 
+ - MTK_BLOADER_INFO_v10 
+ - MTK_BLOADER_INFO_v11 
+ - MTK_BLOADER_INFO_v12 
+ - MTK_BLOADER_INFO_v13 
+ - MTK_BLOADER_INFO_v14 
+ - MTK_BLOADER_INFO_v15 
+ - MTK_BLOADER_INFO_v16 
+ - MTK_BLOADER_INFO_v17
+ - MTK_BLOADER_INFO_v20 
+ - MTK_BLOADER_INFO_v21 
+ - MTK_BLOADER_INFO_v22
+ - MTK_BLOADER_INFO_v24
+ - MTK_BLOADER_INFO_v25
+ - MTK_BLOADER_INFO_v27 
+ - MTK_BLOADER_INFO_v28
+ - MTK_BLOADER_INFO_v30
+ - MTK_BLOADER_INFO_v31
+ - MTK_BLOADER_INFO_v32
+ - MTK_BLOADER_INFO_v35
+ - MTK_BLOADER_INFO_v36
+ - MTK_BLOADER_INFO_v38 
+ - MTK_BLOADER_INFO_v39
+ - MTK_BLOADER_INFO_v40
+ - MTK_BLOADER_INFO_v45
+ - MTK_BLOADER_INFO_v46
+ - MTK_BLOADER_INFO_v47
+ - MTK_BLOADER_INFO_v49
+ - MTK_BLOADER_INFO_v51
+ - MTK_BLOADER_INFO_v52
+Supported DRAMs: 
+ - Discrete DDR1 
+ - Discrete LPDDR2
+ - Discrete LPDDR3
+ - Discrete PCDDR3
+ - MCP(NAND+DDR1) 
+ - MCP(NAND+LPDDR2)
+ - MCP(NAND+LPDDR3)
+ - MCP(NAND+PCDDR3) 
+ - MCP(eMMC+DDR1) 
+ - MCP(eMMC+LPDDR2)
+ - MCP(eMMC+LPDDR3)
+ - MCP(eMMC+PCDDR3)
+ - MCP(eMMC+LPDDR4)
+ - MCP(eMMC+LPDR4X)
+ - uMCP(eUFS+LPDDR4X)
