@@ -1077,7 +1077,7 @@ bool EMIParser::PrasePreloader()
                     emi.emi_cfg.emi_v39.emi_cfg.m_dram_rank_size[2] +
                     emi.emi_cfg.emi_v39.emi_cfg.m_dram_rank_size[3]);
         }
-        else if(emi_ver == 0x31 || emi_ver == 0x34) //MTK_BLOADER_INFO_v49 - MTK_BLOADER_INFO_v52
+        else if(emi_ver == 0x31 || emi_ver == 0x34 || emi_ver == 0x36) //MTK_BLOADER_INFO_v49 - MTK_BLOADER_INFO_v52
         {
             memcpy(&emi.emi_cfg.emi_v49, BldrInfo.mid(idx).data(), sizeof(emi.emi_cfg.emi_v49.emi_cfg));
             idx += sizeof(emi.emi_cfg.emi_v49.emi_len);
