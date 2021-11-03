@@ -7,7 +7,7 @@
  - and read the following details:
  - detailed info about supported flash IDs by the given file. 
  - detailed info about eMMC/UFS ID (cid, vendorID - sub_FlashID - manufacturer date, etc). 
- - detailed info about DRAM'S by the desired ID (RAM type - RAM size). 
+ - detailed info about DRAM'S in the desired ID (RAM type - RAM size). 
 Supported preloader versions:  
  - MTK_BLOADER_INFO_v08 
  - MTK_BLOADER_INFO_v10 
