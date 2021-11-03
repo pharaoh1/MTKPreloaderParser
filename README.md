@@ -1,6 +1,5 @@
 # MTKPreloaderParser
- MTK Preloader Parser V3
- Simple tool to parse mtk =>  
+ Simple tool to parse mtk
  - Preloader File. 
  - BLoader Info. 
  - eMMC Boot1 Region. 
@@ -40,19 +39,3 @@ Supported preloader versions:
  - MTK_BLOADER_INFO_v49
  - MTK_BLOADER_INFO_v51
  - MTK_BLOADER_INFO_v52
-Supported DRAMs: 
- - Discrete DDR1 
- - Discrete LPDDR2
- - Discrete LPDDR3
- - Discrete PCDDR3
- - MCP(NAND+DDR1) 
- - MCP(NAND+LPDDR2)
- - MCP(NAND+LPDDR3)
- - MCP(NAND+PCDDR3) 
- - MCP(eMMC+DDR1) 
- - MCP(eMMC+LPDDR2)
- - MCP(eMMC+LPDDR3)
- - MCP(eMMC+PCDDR3)
- - MCP(eMMC+LPDDR4)
- - MCP(eMMC+LPDR4X)
- - uMCP(eUFS+LPDDR4X)
