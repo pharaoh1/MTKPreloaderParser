@@ -283,10 +283,10 @@ bool EMIParser::PrasePreloader()
         char hdr[0x1b]{0x00};
         char pre_bin[0x3d]{0x00};
         quint32 m_version{0x00};
-        quint32 m_chksum_seed{0x00};
+        quint32 m_bl_chksum{0x00};
         quint32 m_start_addr{0x00};
         char mtk_bin[0x8]{0x00};
-        quint32 total_emis{0x00};
+        quint32 total_custem_chips{0x00};
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
     qbyte emi_hdr((char*)bldr.hdr, sizeof(bldr.hdr));
@@ -296,7 +296,7 @@ bool EMIParser::PrasePreloader()
                                                                                  platform,
                                                                                  flash_dev,
                                                                                  project_id,
-                                                                                 get_hex(bldr.total_emis));
+                                                                                 get_hex(bldr.total_custem_chips));
 
     if (!emi_hdr.startsWith(MTK_BLOADER_INFO_BEGIN))
     {
@@ -314,7 +314,7 @@ bool EMIParser::PrasePreloader()
     qInfo(".....................................................");
 
     qsizetype idx = sizeof(bldr);
-    for (uint i = 0; i < bldr.total_emis; i++)
+    for (uint i = 0; i < bldr.total_custem_chips; i++)
     {
         mtkPreloader::MTKEMIInfo emi = {};
 
@@ -1227,3 +1227,71 @@ bool EMIParser::PrasePreloader()
     return 0;
 }
 
+//int32_t RelocateExtBootloader(uint32_t srcAddr, uint32_t srcLen, uint32_t searchAddr, uint32_t *pExtBootloaderLen)
+//{
+//   MTK_BL_ROMInfo_v1_ST *pBlRomInfo = NULL;
+
+//   kal_uint32 extblLoadAddr = INVALID_START_ADDR;
+//   kal_uint32 extblLoadLen  = 0;
+
+//   kal_uint32 *p = (kal_uint32*)searchAddr;
+//   kal_uint32 *pSearchEnd = (kal_uint32*)(srcAddr + srcLen - sizeof(MTK_BL_ROMInfo_v1_ST));
+
+//   if(srcLen < sizeof(MTK_BL_ROMInfo_v1_ST))
+//   {
+//      return INVALID_START_ADDR;
+//   }
+
+//   //Rewind for the partial read
+//   if(p  >= (kal_uint32*)(srcAddr + sizeof(MTK_BL_ROMInfo_v1_ST)))
+//   {
+//      p -= sizeof(MTK_BL_ROMInfo_v1_ST)/4;
+//   }
+//   else
+//   {
+//      p = (kal_uint32*)srcAddr;
+//   }
+
+//   for(; p<=pSearchEnd; p++)
+//   {
+//      if(memcmp(p, "MTK_BOOT_LOADER_ROMINFO_V01", sizeof("MTK_BOOT_LOADER_ROMINFO_V01")) == 0)
+//      {
+//         kal_uint32 calcChecksum = Calc_Chksum((kal_uint32)p, PATTERN_ID_LEN);
+//         MTK_BL_ROMInfo_v1_ST *pBlRomInfo = (MTK_BL_ROMInfo_v1_ST*)p;
+
+//         BL_PRINT(LOG_DEBUG, "Addr=%x, calc=%d, val=%d\n\r", p, calcChecksum, pBlRomInfo->m_bl_header.m_super_id_chksum);
+//         BL_PRINT(LOG_DEBUG, "length=%d, addr=%x\n\r", pBlRomInfo->m_bl_length, pBlRomInfo->m_bl_load_address);
+
+//         if(calcChecksum == pBlRomInfo->m_bl_header.m_super_id_chksum)
+//         {
+//            extblLoadAddr = pBlRomInfo->m_bl_load_address;
+//            extblLoadLen  = pBlRomInfo->m_bl_length + sizeof(MTK_BL_ROMInfo_Tail_v1_ST);
+//            break;
+//         }
+//      }
+//   }
+
+//   if(extblLoadAddr != INVALID_START_ADDR)
+//   {
+//      if(extblLoadAddr != srcAddr)
+//      {
+//         kal_uint32 copyLen = extblLoadLen<srcLen ? extblLoadLen : srcLen;
+
+//         /* Make sure the load address is in bank 0 */
+//         if(extblLoadAddr >= 0x10000000 && extblLoadAddr+copyLen > 0x10000000)
+//         {
+//            BL_PRINT(LOG_ERROR, "Invalad load addr %x\n\r", extblLoadAddr);
+//            return INVALID_START_ADDR;
+//         }
+
+//         memmove((void*)extblLoadAddr, (void*)srcAddr, copyLen);
+//      }
+
+//      if(pExtBootloaderLen)
+//      {
+//         *pExtBootloaderLen = extblLoadLen;
+//      }
+//   }
+
+//   return extblLoadAddr;
+//}
