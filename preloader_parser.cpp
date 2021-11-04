@@ -286,7 +286,7 @@ bool EMIParser::PrasePreloader()
         quint32 m_bl_chksum{0x00};
         quint32 m_start_addr{0x00};
         char mtk_bin[0x8]{0x00};
-        quint32 total_custem_chips{0x00};
+        quint32 total_emis{0x00};
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
     qbyte emi_hdr((char*)bldr.hdr, sizeof(bldr.hdr));
@@ -296,7 +296,7 @@ bool EMIParser::PrasePreloader()
                                                                                  platform,
                                                                                  flash_dev,
                                                                                  project_id,
-                                                                                 get_hex(bldr.total_custem_chips));
+                                                                                 get_hex(bldr.total_emis));
 
     if (!emi_hdr.startsWith(MTK_BLOADER_INFO_BEGIN))
     {
@@ -314,7 +314,7 @@ bool EMIParser::PrasePreloader()
     qInfo(".....................................................");
 
     qsizetype idx = sizeof(bldr);
-    for (uint i = 0; i < bldr.total_custem_chips; i++)
+    for (uint i = 0; i < bldr.total_emis; i++)
     {
         mtkPreloader::MTKEMIInfo emi = {};
 
