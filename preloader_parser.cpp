@@ -280,12 +280,12 @@ bool EMIParser::PrasePreloader()
 
     struct BLoaderInfo_U
     {
-        char hdr[0x1b]{0x00};
-        char pre_bin[0x3d]{0x00};
+        char hdr[27]{0x00};
+        char pre_bin[61]{0x00};
         quint32 m_version{0x00};
         quint32 m_bl_chksum{0x00};
         quint32 m_start_addr{0x00};
-        char mtk_bin[0x8]{0x00};
+        char mtk_bin[8]{0x00};
         quint32 total_emis{0x00};
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
