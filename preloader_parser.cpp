@@ -103,7 +103,7 @@ qstr get_dram_type(quint16 type)
             return "MCP(NAND+LPDDR2)";
         case 0x103:
             return "MCP(NAND+LPDDR3)";
-        case  0x104:
+        case 0x104:
             return "MCP(NAND+PCDDR3)";
         case 0x201:
             return "MCP(eMMC+DDR1)";
@@ -119,8 +119,10 @@ qstr get_dram_type(quint16 type)
             return "MCP(eMMC+LPDR4X)";
         case 0x306:
             return "uMCP(eUFS+LPDDR4X)";
+//        case 0x308:
+//            return "uMCP(eUFS+LPDDR!)";
         default:
-            return "Unknown";
+            return qstr("%0:Unknown").arg(get_hex(type));
     }
 }
 
@@ -277,13 +279,13 @@ bool EMIParser::PrasePreloader()
             return 0;
     }
 
-    struct MTKBloaderInfo
+    struct BLoaderInfo_U
     {
         char hdr[0x1b]{0x00};
         char pre_bin[0x3d]{0x00};
-        quint32 reserved0{0x00};
-        quint32 reserved1{0x00};
-        quint32 reserved2{0x00};
+        quint32 m_version{0x00};
+        quint32 m_chksum_seed{0x00};
+        quint32 m_start_addr{0x00};
         char mtk_bin[0x8]{0x00};
         quint32 total_emis{0x00};
     } bldr = {};
