@@ -187,7 +187,6 @@ bool EMIParser::PrasePreloader()
     }
 
     qint64 emi_idx = 0x00;
-    qbyte pattern("MTK_BLOADER_INFO_v");
     if (gfh_info.magic == 0x434d4d45
             || gfh_info.magic == 0x5f534655) //!MTK_BOOT_REGION!
     {
@@ -209,7 +208,7 @@ bool EMIParser::PrasePreloader()
         if (!this->m_preloader->seek(0x00))
             return 0;
 
-        emi_idx = this->m_preloader->readAll().indexOf(pattern);
+        emi_idx = this->m_preloader->readAll().indexOf(MTK_BLOADER_INFO_BEGIN);
         if (emi_idx == -1)
         {
             qInfo().noquote() << qstr("invalid/unsupported mtk_boot_region data{%0}").arg(get_hex(gfh_info.magic));
@@ -299,7 +298,7 @@ bool EMIParser::PrasePreloader()
                                                                                  project_id,
                                                                                  get_hex(bldr.total_emis));
 
-    if (!emi_hdr.startsWith(pattern))
+    if (!emi_hdr.startsWith(MTK_BLOADER_INFO_BEGIN))
     {
         qInfo().noquote() << qstr("invalid/unsupported mtk_emi_info{%0}").arg(emi_hdr.data());
         return 0;

@@ -19,6 +19,8 @@ using namespace std;
 #define UFS_VENDOR_SAMSUNG     0x1CE
 #define UFS_VENDOR_SKHYNIX     0x1AD
 
+#define MTK_BLOADER_INFO_BEGIN	"MTK_BLOADER_INFO_v"
+
 namespace mtkPreloader {
 
 //!MTK_BLOADER_INFO_v08_EMMC
