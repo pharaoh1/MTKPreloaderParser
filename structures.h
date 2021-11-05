@@ -37,20 +37,24 @@ public:
 } EMIInfoV08;
 
 //!MTK_BLOADER_INFO_v10_EMMC
-typedef struct EMIInfoV10 //MT6589
+typedef struct EMIInfoV10 //MT6589 , MT8135
 {
     struct
     {
-        quint m_sub_ver{0x00};
-        quint m_type{0x00};
-        quint m_id_length{0x00};
-        quint fw_id_length{0x00};
-        char m_emmc_id[16]{0x00};
-        char m_fw_id[8]{0x00};
+        quint m_sub_ver{0x00}; //# Sub_version checking for flash tool
+        quint m_type{0x00}; //#type
+        quint m_id_length{0x00}; // # EMMC ID checking length
+        quint fw_id_length{0x00}; //# FW ID checking length
+        char m_emmc_id[16]{0x00}; //#id
+        char m_fw_id[8]{0x00}; //  #fw id
         union {
-            quint dramc0[17];
+            quint dramc0[17];//EMI settings len = 0x44
         };
-        quint m_dram_rank_size[4]{1024*0124}; //TODO
+        //end to end should be 0x4f
+        quint m_dram_rank_size[4]{0x00};
+        int     MMD;                              //MMD info, for 6589 just has two types MMD1 and MMD2.
+        int     m_reserved[8];
+
     } emi_cfg;
 public:
     unsigned int emi_len[46]; //bc000000
