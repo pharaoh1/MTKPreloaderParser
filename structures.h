@@ -37,7 +37,7 @@ public:
 } EMIInfoV08;
 
 //!MTK_BLOADER_INFO_v10_EMMC
-typedef struct EMIInfoV10
+typedef struct EMIInfoV10 //MT6589
 {
     struct
     {
@@ -53,8 +53,8 @@ typedef struct EMIInfoV10
         quint m_dram_rank_size[4]{1024*0124}; //TODO
     } emi_cfg;
 public:
-    unsigned int emi_len[46];
-} EMIInfoV10;
+    unsigned int emi_len[46]; //bc000000
+} EMIInfoV10;//https://github.com/cakehonolulu/android_kernel_bq_Aquaris5HD/blob/d08666e5144f8a1de123d46a63ff9c4442e31799/mediatek/build/tools/emigen/MT6589/emigen.pl
 
 //!MTK_BLOADER_INFO_v11_EMMC
 typedef struct EMIInfoV11

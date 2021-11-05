@@ -278,15 +278,15 @@ bool EMIParser::PrasePreloader()
             return 0;
     }
 
-    struct BLoaderInfo_U
+    struct MTKLoaderInfoTag
     {
         char hdr[0x1b]{0x00};
         char pre_bin[0x3d]{0x00};
-        quint32 m_version{0x00};
-        quint32 m_bl_chksum{0x00};
-        quint32 m_start_addr{0x00};
+        quint32 m_version{0x00}; //56313136
+        quint32 m_bl_chksum{0x00}; //22884433
+        quint32 m_start_addr{0x00}; //90007000
         char mtk_bin[8]{0x00};
-        quint32 total_emis{0x00};
+        quint32 total_emis{0x00}; //!# number of emi settings.
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
     qbyte emi_hdr((char*)bldr.hdr, sizeof(bldr.hdr));
