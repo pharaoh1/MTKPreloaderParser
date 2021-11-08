@@ -695,14 +695,14 @@ public:
 
 typedef struct CIDInfo
 {
-    std::string ManufacturerId{0x00};
-    std::string Manufacturer{0x00};
-    std::string CardBGA{0x00};
-    std::string OEMApplicationId{0x00};
-    std::string ProductName{0x00};
-    std::string ProductRevision{0x00};
-    std::string ProductSerialNumber{0x00};
-    std::string ManufacturingDate{0x00};
+    qstr ManufacturerId{};
+    qstr Manufacturer{};
+    qstr CardBGA{};
+    qstr OEMApplicationId{};
+    qstr ProductName{};
+    qstr ProductRevision{};
+    qstr ProductSerialNumber{};
+    qstr ManufacturingDate{};
 }CIDInfo;
 }
 #endif // STRUCTURES_H
