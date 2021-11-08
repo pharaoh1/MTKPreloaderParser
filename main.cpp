@@ -43,8 +43,25 @@ int main(int argc, char *argv[])
             std::cin.ignore();
         }
 
-        EMIParser::PrasePreloader(io_dev);
+        QVector<mtkPreloader::MTKEMIInfo> emis = {};
+        EMIParser::PrasePreloader(io_dev, emis);
         io_dev.close();
+
+        for (QVector<mtkPreloader::MTKEMIInfo>::iterator it =
+             emis.begin(); it != emis.end(); it++)
+        {
+            mtkPreloader::MTKEMIInfo emi = *it;
+
+            qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(emi.index,
+                                                                                      emi.flash_id,
+                                                                                      emi.manufacturer_id,
+                                                                                      emi.manufacturer,
+                                                                                      emi.ProductName,
+                                                                                      emi.OEMApplicationId,
+                                                                                      emi.CardBGA,
+                                                                                      emi.dram_type,
+                                                                                      emi.dram_size);
+        }
 
         path.clear();
         std::cin.ignore();

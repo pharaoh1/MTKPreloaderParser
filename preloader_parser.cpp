@@ -1,6 +1,6 @@
 #include "preloader_parser.h"
 
-bool EMIParser::PrasePreloader(QIODevice &emi_dev)
+bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMIInfo> &emis)
 {
     if (!emi_dev.seek(0x00))
         return 0;
@@ -165,7 +165,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -191,7 +191,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -217,7 +217,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -243,7 +243,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -269,7 +269,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -296,7 +296,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -322,7 +322,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -348,7 +348,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -374,7 +374,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -400,7 +400,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -426,7 +426,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -452,7 +452,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -478,7 +478,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -504,7 +504,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -530,7 +530,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -556,7 +556,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -582,7 +582,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -608,7 +608,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -634,7 +634,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -660,7 +660,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -686,7 +686,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -712,7 +712,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -738,7 +738,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -764,7 +764,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -790,7 +790,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -821,7 +821,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid, is_ufs);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -849,7 +849,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid, is_ufs);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -876,7 +876,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid, is_ufs);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -903,7 +903,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             mmcCARD::CIDInfo m_cid = {};
             PraseCID(dev_id, m_cid, is_ufs);
 
-            emi.index = i;
+            emi.index = get_hex(i);
             emi.flash_id = dev_id.toHex().data();
             emi.manufacturer_id = m_cid.ManufacturerId;
             emi.manufacturer = m_cid.Manufacturer;
@@ -925,15 +925,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
         if (!emi.flash_id.size())
             continue;
 
-        qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(get_hex(emi.index),
-                                                                                  emi.flash_id,
-                                                                                  emi.manufacturer_id,
-                                                                                  emi.manufacturer,
-                                                                                  emi.ProductName,
-                                                                                  emi.OEMApplicationId,
-                                                                                  emi.CardBGA,
-                                                                                  emi.dram_type,
-                                                                                  emi.dram_size);
+        emis.push_back(emi);
     }
 
     return 0;
@@ -978,6 +970,7 @@ qstr EMIParser::GetEMIFlashDev(qbyte emi_buf)
     if (emi_dev == "MT6752" && emi_buf.contains(MTK_BLOADER_INFO_BEGIN))
     {
         qbyte emi_tag = emi_buf.mid(emi_buf.indexOf(MTK_BLOADER_INFO_BEGIN), 0x14);
+
         if (emi_tag == "MTK_BLOADER_INFO_v00")
             emi_dev = "MT6595/MT6797";
         if (emi_tag == "MTK_BLOADER_INFO_v04")
@@ -994,7 +987,6 @@ qstr EMIParser::GetEMIFlashDev(qbyte emi_buf)
             emi_dev = "MT6582";
         if (emi_tag == "MTK_BLOADER_INFO_v13")
             emi_dev = "MT6592/MT8127";
-
         if (emi_tag == "MTK_BLOADER_INFO_v20")
             emi_dev = "MT6735";
         if (emi_tag == "MTK_BLOADER_INFO_v22")
@@ -1005,7 +997,6 @@ qstr EMIParser::GetEMIFlashDev(qbyte emi_buf)
             emi_dev = "MT6570";
         if (emi_tag == "MTK_BLOADER_INFO_v28")
             emi_dev = "MT8167";
-
         if (emi_tag == "MTK_BLOADER_INFO_v30")
             emi_dev = "MT6763";
         if (emi_tag == "MTK_BLOADER_INFO_v31")
@@ -1020,7 +1011,6 @@ qstr EMIParser::GetEMIFlashDev(qbyte emi_buf)
             emi_dev = "MT6761";
         if (emi_tag == "MTK_BLOADER_INFO_v39")
             emi_dev = "MT6779";
-
         if (emi_tag == "MTK_BLOADER_INFO_v40")
             emi_dev = "MT6768";
         if (emi_tag == "MTK_BLOADER_INFO_v45")

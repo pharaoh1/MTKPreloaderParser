@@ -654,7 +654,7 @@ typedef struct MTKEMIInfo
 
     } emi_cfg = {};
 public:
-    quint32 index{0x00};
+    qstr index{};
     qstr flash_id{};
     qstr manufacturer_id{};
     qstr manufacturer{};

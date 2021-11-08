@@ -9,7 +9,7 @@ public:
     EMIParser(){}
     ~EMIParser(){};
 
-    static bool PrasePreloader(QIODevice &emi_dev);
+    static bool PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMIInfo> &emis);
     static void PraseCID(qbyte raw_cid, mmcCARD::CIDInfo &cid_info, bool ufs_id = 0);
     static qstr GetEMIFlashDev(qbyte emi_buf);
 private:
