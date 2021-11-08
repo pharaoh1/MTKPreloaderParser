@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
                                                                                           emi.dram_type,
                                                                                           emi.dram_size);
 
-                qInfo().noquote() << qstr("EMIInfo{%0}:emi_content:%1").arg(emi_buff.toHex().data()); //for flash tool usage , select emi by cid and fw_id.
+                qInfo().noquote() << qstr("EMIInfo{%0}:emi_content:%1").arg(emi.index, emi_buff.toHex().data()); //for flash tool usage , select emi by cid and fw_id.
                 idx++;
             }
         }
