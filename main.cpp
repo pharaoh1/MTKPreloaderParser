@@ -59,8 +59,6 @@ int main(int argc, char *argv[])
                                                                                           emi.dram_size);
 
                 qInfo().noquote() << qstr("EMIInfo{%0}:version:%1:emi_content:%2").arg(emi.index, qstr::number(emi.m_emi_ver), emi.m_emi_info.toHex().data());
-                //!for flash tool usage , select emi by ver, cid and fw_id.
-                //!and you need to implant the whole emi structure the dramc skip method won't work, the emi settings needed for dram init.
                 //! see EMIInfoV20
                 idx++;
             }
