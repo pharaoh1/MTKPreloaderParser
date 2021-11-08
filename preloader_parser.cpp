@@ -140,6 +140,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
     QFile BLDRINFO(emi_hdr);
     BLDRINFO.open(QIODevice::WriteOnly);
     BLDRINFO.write(BldrInfo);
+    BLDRINFO.close();
 
     emi_hdr.remove(0, 0x12);
     quint8 emi_ver = emi_hdr.toInt(nullptr, 0xa);
