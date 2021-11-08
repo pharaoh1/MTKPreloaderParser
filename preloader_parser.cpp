@@ -152,6 +152,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
     for (uint i = 0; i < bldr.m_num_emi_settings; i++)
     {
         mtkPreloader::MTKEMIInfo emi = {};
+        emi.m_emi_ver = emi_ver;
 
         if (emi_ver == 0x08)
         {

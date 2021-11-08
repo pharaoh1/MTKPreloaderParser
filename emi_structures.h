@@ -663,6 +663,7 @@ public:
     qstr CardBGA{};
     qstr dram_type{};
     qstr dram_size{};
+    qsizetype m_emi_ver{};
 }MTKEMIInfo;
 
 typedef struct
