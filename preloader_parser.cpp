@@ -3,19 +3,6 @@
 #include "cidparser.h"
 #include "qfile.h"
 
-EMIParser::EMIParser(QIODevice *preloader)
-    : m_preloader(preloader)
-{}
-
-EMIParser::~EMIParser()
-{
-    if (this->m_preloader)
-    {
-        this->m_preloader->close();
-        this->m_preloader = Q_NULLPTR;
-    }
-}
-
 qstr get_hex(qlonglong num)
 {
     return qstr("0x%0").arg(qstr().setNum(num , 0x10).toLower());
@@ -119,8 +106,8 @@ qstr get_dram_type(quint16 type)
             return "MCP(eMMC+LPDR4X)";
         case 0x306:
             return "uMCP(eUFS+LPDDR4X)";
-//        case 0x308:
-//            return "uMCP(eUFS+LPDDR!)";
+            //        case 0x308:
+            //            return "uMCP(eUFS+LPDDR!)";
         default:
             return qstr("%0:Unknown").arg(get_hex(type));
     }
@@ -132,48 +119,76 @@ qstr get_emi_platform(qbyte emi_buf)
     qbyte serach0("AND_ROMINFO_v");
     qsizetype idx0 = emi_buf.indexOf(serach0);
     if (idx0 != -1)
-    {
         emi_dev = emi_buf.mid(idx0 + 20, 6);
-        if (emi_dev == "MT6752")
+
+    if (emi_dev == "MT6752")
+    {
+        qbyte serach1("bootable/bootloader/preloader/platform/mt");
+        qsizetype idx1 = emi_buf.indexOf(serach1);
+        if (idx1 != -1)
+            emi_dev = emi_buf.mid(idx1 + serach1.length() - 2, 6);
+
+        qbyte serach2("preloader_");
+        qsizetype idx2 = emi_buf.indexOf(serach2);
+        if (idx2 != -1)
         {
-            qbyte serach1("bootable/bootloader/preloader/platform/mt");
-            qsizetype idx1 = emi_buf.indexOf(serach1);
-            if (idx1 != -1)
+            qstr emi_dev = emi_buf.mid(idx2 + serach2.length(), sizeof(uint64_t));
+            QRegExp regex0("67(\\d+)");
+            if (regex0.indexIn(emi_dev)!= -1)
             {
-                emi_dev = emi_buf.mid(idx1 + serach1.length() - 2, 6);
+                qsizetype dev_id = regex0.cap(1).toInt();
+                emi_dev = qstr("MT67%0").arg(dev_id);
             }
 
-            qbyte serach2("preloader_");
-            qsizetype idx2 = emi_buf.indexOf(serach2);
-            if (idx2 != -1)
+            QRegExp regex1("65(\\d+)");
+            if (regex1.indexIn(emi_dev)!= -1)
             {
-                qstr emi_dev = emi_buf.mid(idx2 + serach2.length(), sizeof(uint64_t));
-                QRegExp regex0("67(\\d+)");
-                if (regex0.indexIn(emi_dev)!= -1)
-                {
-                    qsizetype dev_id = regex0.cap(1).toInt();
-                    emi_dev = qstr("MT67%0").arg(dev_id);
-                }
-
-                QRegExp regex1("65(\\d+)");
-                if (regex1.indexIn(emi_dev)!= -1)
-                {
-                    qsizetype dev_id = regex1.cap(1).toInt();
-                    emi_dev = qstr("MT65%0").arg(dev_id);
-                }
+                qsizetype dev_id = regex1.cap(1).toInt();
+                emi_dev = qstr("MT65%0").arg(dev_id);
             }
         }
     }
+
+    //    if (!emi_buf.contains(MTK_BLOADER_INFO_BEGIN))
+    //    {
+    //        qbyte emi_tag = emi_buf.mid(emi_buf.indexOf(MTK_BLOADER_INFO_BEGIN), 0x1b);
+    //        qInfo() << "EMI_TAG" << emi_tag;
+    //        if (emi_tag == "MTK_BLOADER_INFO_v04")
+    //            emi_dev = "MT6516";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v07")
+    //            emi_dev = "MT6573";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v08")
+    //            emi_dev = "MT6575";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v08")
+    //            emi_dev = "MT6577";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v10")
+    //            emi_dev = "MT6589";
+    //        if(emi_tag == "MTK_BLOADER_INFO_v11")
+    //            emi_dev = "MT6572";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v12")
+    //            emi_dev = "MT6582";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v13")
+    //            emi_dev = "MT6592";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v00")
+    //            emi_dev = "MT6595";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v13")
+    //            emi_dev = "MT8127";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v10")
+    //            emi_dev = "MT8135";
+    //        if (emi_tag == "MTK_BLOADER_INFO_v20")
+    //            emi_dev = "MT6735";
+    //    }
+
     return emi_dev.toUpper();
 }
 
-bool EMIParser::PrasePreloader()
+bool EMIParser::PrasePreloader(QIODevice &emi_dev)
 {
-    if (!this->m_preloader->seek(0x00))
+    if (!emi_dev.seek(0x00))
         return 0;
 
     mtkPreloader::gfh_info_t gfh_info = {};
-    if (!this->m_preloader->read((char*)&gfh_info, sizeof(gfh_info)))
+    if (!emi_dev.read((char*)&gfh_info, sizeof(gfh_info)))
         return 0;
 
     if (gfh_info.length == 0
@@ -191,11 +206,11 @@ bool EMIParser::PrasePreloader()
             || gfh_info.magic == 0x5f534655) //!MTK_BOOT_REGION!
     {
         qsizetype seek_off = (gfh_info.magic == 0x5f534655)?0x1000: 0x800; //UFS_LUN & EMMC_BOOT
-        if (!this->m_preloader->seek(seek_off))
+        if (!emi_dev.seek(seek_off))
             return 0;
 
         memset(&gfh_info, 0x00, sizeof(gfh_info));
-        if (!this->m_preloader->read((char*)&gfh_info, sizeof(gfh_info)))
+        if (!emi_dev.read((char*)&gfh_info, sizeof(gfh_info)))
             return 0;
 
         if (gfh_info.length == 0
@@ -205,17 +220,17 @@ bool EMIParser::PrasePreloader()
             return 0;
         }
 
-        if (!this->m_preloader->seek(0x00))
+        if (!emi_dev.seek(0x00))
             return 0;
 
-        emi_idx = this->m_preloader->readAll().indexOf(MTK_BLOADER_INFO_BEGIN);
+        emi_idx = emi_dev.readAll().indexOf(MTK_BLOADER_INFO_BEGIN);
         if (emi_idx == -1)
         {
             qInfo().noquote() << qstr("invalid/unsupported mtk_boot_region data{%0}").arg(get_hex(gfh_info.magic));
             return 0;
         }
 
-        if (!this->m_preloader->seek(0x00))
+        if (!emi_dev.seek(0x00))
             return 0;
     }
 
@@ -225,11 +240,11 @@ bool EMIParser::PrasePreloader()
 
     if (gfh_info.magic == 0x5f4b544d) //!MTK_BLOADER_INFO!
     {
-        BldrInfo.resize(this->m_preloader->size());
+        BldrInfo.resize(emi_dev.size());
 
-        if (!this->m_preloader->seek(0x00))
+        if (!emi_dev.seek(0x00))
             return 0;
-        if (!this->m_preloader->read(BldrInfo.data(), BldrInfo.size()))
+        if (!emi_dev.read(BldrInfo.data(), BldrInfo.size()))
             return 0;
     }
     else
@@ -241,13 +256,13 @@ bool EMIParser::PrasePreloader()
             return 0;
         }
 
-        if (!this->m_preloader->seek(0x00))
+        if (!emi_dev.seek(0x00))
             return 0;
 
-        qbyte prl_info = this->m_preloader->readAll();
+        qbyte prl_info = emi_dev.readAll();
         platform = get_emi_platform(prl_info);
 
-        if (!this->m_preloader->seek(0x00))
+        if (!emi_dev.seek(0x00))
             return 0;
 
         quint emilength = 0x1000; //!MAX_EMI_LEN
@@ -255,16 +270,15 @@ bool EMIParser::PrasePreloader()
 
         if (emi_idx == 0x00)
         {
-            if (!this->m_preloader->seek(emi_loc))
+            if (!emi_dev.seek(emi_loc))
                 return 0;
 
-            if (!this->m_preloader->read((char*)&emilength, sizeof(quint)))
+            if (!emi_dev.read((char*)&emilength, sizeof(quint)))
                 return 0;
 
             if (emilength == 0)
             {
                 qInfo().noquote() << qstr("invalid/unsupported mtk_bloader_info data{%0}").arg(get_hex(emi_loc));
-                return 0;
                 return 0;
             }
 
@@ -272,31 +286,31 @@ bool EMIParser::PrasePreloader()
         }
 
         BldrInfo.resize(emilength);
-        if (!this->m_preloader->seek(emi_idx))
+        if (!emi_dev.seek(emi_idx))
             return 0;
-        if (!this->m_preloader->read(BldrInfo.data(), BldrInfo.size()))
+        if (!emi_dev.read(BldrInfo.data(), BldrInfo.size()))
             return 0;
     }
 
     struct MTKLoaderInfoTag
     {
-        char hdr[0x1b]{0x00};
+        char emi_tag[0x1b]{0x00};
         char pre_bin[0x3d]{0x00};
         quint32 m_version{0x00}; //56313136
         quint32 m_bl_chksum{0x00}; //22884433
         quint32 m_start_addr{0x00}; //90007000
-        char mtk_bin[8]{0x00};
-        quint32 total_emis{0x00}; //!# number of emi settings.
+        char m_identifier[8]{0x00};
+        quint32 m_num_emi_settings{0x00}; //!# number of emi settings.
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
-    qbyte emi_hdr((char*)bldr.hdr, sizeof(bldr.hdr));
+    qbyte emi_hdr((char*)bldr.emi_tag, sizeof(bldr.emi_tag));
     qbyte project_id((char*)bldr.pre_bin, sizeof(bldr.pre_bin));
 
     qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:num_records[%4]").arg(emi_hdr.data(),
-                                                                                 platform,
-                                                                                 flash_dev,
-                                                                                 project_id,
-                                                                                 get_hex(bldr.total_emis));
+                                                                          platform,
+                                                                          flash_dev,
+                                                                          project_id,
+                                                                          get_hex(bldr.m_num_emi_settings));
 
     if (!emi_hdr.startsWith(MTK_BLOADER_INFO_BEGIN))
     {
@@ -314,7 +328,7 @@ bool EMIParser::PrasePreloader()
     qInfo(".....................................................");
 
     qsizetype idx = sizeof(bldr);
-    for (uint i = 0; i < bldr.total_emis; i++)
+    for (uint i = 0; i < bldr.m_num_emi_settings; i++)
     {
         mtkPreloader::MTKEMIInfo emi = {};
 
@@ -1214,14 +1228,14 @@ bool EMIParser::PrasePreloader()
             continue;
 
         qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(get_hex(emi.index),
-                                                                                     emi.flash_id,
-                                                                                     emi.manufacturer_id,
-                                                                                     emi.manufacturer,
-                                                                                     emi.ProductName,
-                                                                                     emi.OEMApplicationId,
-                                                                                     emi.CardBGA,
-                                                                                     emi.dram_type,
-                                                                                     emi.dram_size);
+                                                                                  emi.flash_id,
+                                                                                  emi.manufacturer_id,
+                                                                                  emi.manufacturer,
+                                                                                  emi.ProductName,
+                                                                                  emi.OEMApplicationId,
+                                                                                  emi.CardBGA,
+                                                                                  emi.dram_type,
+                                                                                  emi.dram_size);
     }
 
     return 0;

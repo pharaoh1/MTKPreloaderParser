@@ -8,13 +8,10 @@ class QIODevice;
 class EMIParser
 {
 public:
-    EMIParser(QIODevice *preloader);
-    ~EMIParser();
+    EMIParser(){}
+    ~EMIParser(){};
 
-    bool PrasePreloader();
-
-private:
-   QIODevice *m_preloader{0x00};
+    static bool PrasePreloader(QIODevice &emi_dev);
 };
 
 #endif // PRELOADER_PARSER_H

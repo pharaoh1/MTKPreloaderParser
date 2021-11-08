@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
             std::cin.ignore();
         }
 
-        EMIParser emi(&io_dev);
-        emi.PrasePreloader();
+        EMIParser::PrasePreloader(io_dev);
+        io_dev.close();
 
         path.clear();
         std::cin.ignore();
