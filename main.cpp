@@ -29,38 +29,41 @@ int main(int argc, char *argv[])
         std::cin.get((char*)path.data(), 0xff);
 
         qInfo(".....................................................");
-        qInfo().noquote() << QString("Reading file %0").arg(path.data());
-        QFile io_dev(QDir::toNativeSeparators(path));
-        if (!io_dev.size())
+        qInfo().noquote() << QString("Reading emi file %0").arg(path.data());
+        QFile emi_dev(QDir::toNativeSeparators(path));
+        if (!emi_dev.size())
         {
             qInfo().noquote() << QString("please input a valid file!.");
             std::cin.ignore();
         }
 
-        if (!io_dev.open(QIODevice::ReadOnly))
+        if (emi_dev.open(QIODevice::ReadOnly))
         {
-            qInfo().noquote() << QString("file open fail!(%0)").arg(qt_error_string());
-            std::cin.ignore();
-        }
+            QVector<qbyte> buff = {};
+            QVector<mtkPreloader::MTKEMIInfo> emis = {};
+            EMIParser::PrasePreloader(emi_dev, emis, buff);
+            emi_dev.close();
 
-        QVector<mtkPreloader::MTKEMIInfo> emis = {};
-        EMIParser::PrasePreloader(io_dev, emis);
-        io_dev.close();
+            qsizetype idx = 0;
+            for (QVector<mtkPreloader::MTKEMIInfo>::iterator it =
+                 emis.begin(); it != emis.end(); it++)
+            {
+                mtkPreloader::MTKEMIInfo emi = *it;
+                qbyte emi_buff = buff.at(idx);
 
-        for (QVector<mtkPreloader::MTKEMIInfo>::iterator it =
-             emis.begin(); it != emis.end(); it++)
-        {
-            mtkPreloader::MTKEMIInfo emi = *it;
+                qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(emi.index,
+                                                                                          emi.flash_id,
+                                                                                          emi.manufacturer_id,
+                                                                                          emi.manufacturer,
+                                                                                          emi.ProductName,
+                                                                                          emi.OEMApplicationId,
+                                                                                          emi.CardBGA,
+                                                                                          emi.dram_type,
+                                                                                          emi.dram_size);
 
-            qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(emi.index,
-                                                                                      emi.flash_id,
-                                                                                      emi.manufacturer_id,
-                                                                                      emi.manufacturer,
-                                                                                      emi.ProductName,
-                                                                                      emi.OEMApplicationId,
-                                                                                      emi.CardBGA,
-                                                                                      emi.dram_type,
-                                                                                      emi.dram_size);
+                qInfo().noquote() << qstr("EMIInfo{%0}:emi_content:%1").arg(emi_buff.toHex().data()); //for flash tool usage , select emi by cid and fw_id.
+                idx++;
+            }
         }
 
         path.clear();
