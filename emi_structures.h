@@ -670,11 +670,11 @@ typedef struct
     quint magic;
     qshort size;
     qshort type;
-    int8_t id[12];
+    qint8 id[12];
     quint file_version;
     qshort file_type;
-    int8_t flash_dev;
-    int8_t sig_type;
+    qint8 flash_dev;
+    qint8 sig_type;
     quint load_addr;
     quint length;
     quint max_size;
@@ -690,22 +690,22 @@ namespace mmcCARD {
 typedef struct emmc_card_info_cid_t
 {
 public:
-    uint8_t mid{0x00}; /* Manufacturer ID */
-    uint8_t cbx{0x00}; /* Reserved(6)+Card/BGA(2) */ //- Only lower 2 bit valid
-    uint8_t oid{0x00}; /* OEM/Application ID */
-    uint8_t pnm0{0x00}; /* Product name [0] */
-    uint8_t pnm1{0x00}; /* Product name [1] */
-    uint8_t pnm2{0x00}; /* Product name [2] */
-    uint8_t pnm3{0x00}; /* Product name [3] */
-    uint8_t pnm4{0x00}; /* Product name [4] */
-    uint8_t pnm5{0x00}; /* Product name [5] */
-    uint8_t pdrv{0x00}; /* Product revision */
-    uint8_t psn0{0x00}; /* Serial Number [0] */
-    uint8_t psn1{0x00}; /* Serial Number [1] */
-    uint8_t psn2{0x00}; /* Serial Number [2] */
-    uint8_t psn3{0x00}; /* Serial Number [3] */
-    uint8_t mdt{0x00}; /* Manufacturer date */
-    uint8_t crc7{0x00}; /* CRC7 + stuff bit*/  //--Only top 7 bit
+    qchar mid{0x00}; /* Manufacturer ID */
+    qchar cbx{0x00}; /* Reserved(6)+Card/BGA(2) */ //- Only lower 2 bit valid
+    qchar oid{0x00}; /* OEM/Application ID */
+    qchar pnm0{0x00}; /* Product name [0] */
+    qchar pnm1{0x00}; /* Product name [1] */
+    qchar pnm2{0x00}; /* Product name [2] */
+    qchar pnm3{0x00}; /* Product name [3] */
+    qchar pnm4{0x00}; /* Product name [4] */
+    qchar pnm5{0x00}; /* Product name [5] */
+    qchar pdrv{0x00}; /* Product revision */
+    qchar psn0{0x00}; /* Serial Number [0] */
+    qchar psn1{0x00}; /* Serial Number [1] */
+    qchar psn2{0x00}; /* Serial Number [2] */
+    qchar psn3{0x00}; /* Serial Number [3] */
+    qchar mdt{0x00}; /* Manufacturer date */
+    qchar crc7{0x00}; /* CRC7 + stuff bit*/  //--Only top 7 bit
 }mmc_cid_t;
 
 typedef struct CIDInfo
