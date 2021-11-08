@@ -292,19 +292,19 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev)
             return 0;
     }
 
-    struct MTKLoaderInfoTag
+    struct BLoaderInfo_VXX_TAG
     {
-        char emi_tag[0x1b]{0x00};
-        char pre_bin[0x3d]{0x00};
-        quint32 m_version{0x00}; //56313136
-        quint32 m_bl_chksum{0x00}; //22884433
+        char m_identifier[0x1b]{0x00};
+        char m_filename[0x3d]{0x00};
+        quint32 m_version{0x00}; //V116
+        quint32 m_chksum_seed{0x00}; //22884433
         quint32 m_start_addr{0x00}; //90007000
-        char m_identifier[8]{0x00};
+        char m_bin_identifier[8]{0x00}; //MTK_BIN
         quint32 m_num_emi_settings{0x00}; //!# number of emi settings.
     } bldr = {};
     memcpy(&bldr, BldrInfo.data(), sizeof(bldr));
-    qbyte emi_hdr((char*)bldr.emi_tag, sizeof(bldr.emi_tag));
-    qbyte project_id((char*)bldr.pre_bin, sizeof(bldr.pre_bin));
+    qbyte emi_hdr((char*)bldr.m_identifier , sizeof(bldr.m_identifier ));
+    qbyte project_id((char*)bldr.m_filename, sizeof(bldr.m_filename));
 
     qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:num_records[%4]").arg(emi_hdr.data(),
                                                                           platform,
