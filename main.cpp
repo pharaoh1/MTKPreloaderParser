@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     a.isSetuidAllowed();
-    a.setApplicationName("MTK Preloader Parser V3.0000.0");
-    a.setApplicationVersion("3.0000.0");
+    a.setApplicationName("MTK Preloader Parser V4.0000.0");
+    a.setApplicationVersion("4.0000.0");
     a.setOrganizationName("Mediatek");
     a.setQuitLockEnabled(0);
 
