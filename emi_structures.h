@@ -245,6 +245,42 @@ typedef struct EMIInfoV20
             quint dramc0[17];
         };
         quint m_dram_rank_size[4]{0x00};
+        quint m_reserved[10]{0x00};
+        union
+            {
+                struct
+                {
+                    quint LPDDR2_MODE_REG_1;
+                    quint LPDDR2_MODE_REG_2;
+                    quint LPDDR2_MODE_REG_3;
+                    quint LPDDR2_MODE_REG_5;
+                    quint LPDDR2_MODE_REG_10;
+                    quint LPDDR2_MODE_REG_63;
+                };
+                struct
+                {
+                    quint DDR1_MODE_REG;
+                    quint DDR1_EXT_MODE_REG;
+                };
+                struct
+                {
+                    quint PCDDR3_MODE_REG0;
+                    quint PCDDR3_MODE_REG1;
+                    quint PCDDR3_MODE_REG2;
+                    quint PCDDR3_MODE_REG3;
+                    quint PCDDR3_MODE_REG4;
+                    quint PCDDR3_MODE_REG5;
+                };
+                struct
+                {
+                    quint LPDDR3_MODE_REG_1;
+                    quint LPDDR3_MODE_REG_2;
+                    quint LPDDR3_MODE_REG_3;
+                    quint LPDDR3_MODE_REG_5;
+                    quint LPDDR3_MODE_REG_10;
+                    quint LPDDR3_MODE_REG_63;
+                };
+            };
     } emi_cfg;
 public:
     unsigned int emi_len[47];
@@ -663,6 +699,7 @@ public:
     qstr CardBGA{};
     qstr dram_type{};
     qstr dram_size{};
+    qbyte m_emi_info{};
     qsizetype m_emi_ver{};
 }MTKEMIInfo;
 

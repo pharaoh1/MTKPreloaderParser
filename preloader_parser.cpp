@@ -1,6 +1,6 @@
 #include "preloader_parser.h"
 
-bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMIInfo> &emis, QVector<qbyte> &emis_buff)
+bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMIInfo> &emis)
 {
     if (!emi_dev.seek(0x00))
         return 0;
@@ -161,7 +161,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v08.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v08, sizeof(emi.emi_cfg.emi_v08.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v08.emi_cfg, sizeof(emi.emi_cfg.emi_v08.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)emi.emi_cfg.emi_v08.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v08.emi_cfg.m_emmc_id));
 //            dev_id.resize(emi.emi_cfg.emi_v08.emi_cfg.m_id_length);
@@ -189,7 +189,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v10.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v10, sizeof(emi.emi_cfg.emi_v10.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v10.emi_cfg, sizeof(emi.emi_cfg.emi_v10.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v10.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v10.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v10.emi_cfg.m_id_length);
@@ -217,7 +217,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v11.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v11, sizeof(emi.emi_cfg.emi_v11.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v11.emi_cfg, sizeof(emi.emi_cfg.emi_v11.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v11.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v11.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v11.emi_cfg.m_id_length);
@@ -245,7 +245,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v12.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v12, sizeof(emi.emi_cfg.emi_v12.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v12.emi_cfg, sizeof(emi.emi_cfg.emi_v12.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v12.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v12.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v12.emi_cfg.m_id_length);
@@ -273,7 +273,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v13.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v13, sizeof(emi.emi_cfg.emi_v13.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v13.emi_cfg, sizeof(emi.emi_cfg.emi_v13.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v13.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v13.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v13.emi_cfg.m_id_length);
@@ -301,7 +301,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v14.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v14, sizeof(emi.emi_cfg.emi_v14.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v14.emi_cfg, sizeof(emi.emi_cfg.emi_v14.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v14.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v14.emi_cfg.m_emmc_id));
             //dev_id.resize(emi.emi_cfg.emi_v14.emi_cfg.m_id_length);
@@ -329,7 +329,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v15.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v15, sizeof(emi.emi_cfg.emi_v15.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v15.emi_cfg, sizeof(emi.emi_cfg.emi_v15.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v15.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v15.emi_cfg.m_emmc_id));
             //dev_id.resize(emi.emi_cfg.emi_v15.emi_cfg.m_id_length);
@@ -357,7 +357,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v16.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v16, sizeof(emi.emi_cfg.emi_v16.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v16.emi_cfg, sizeof(emi.emi_cfg.emi_v16.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v16.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v16.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v16.emi_cfg.m_id_length);
@@ -385,7 +385,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v17.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v17, sizeof(emi.emi_cfg.emi_v17.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v17.emi_cfg, sizeof(emi.emi_cfg.emi_v17.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v17.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v17.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v17.emi_cfg.m_id_length);
@@ -413,7 +413,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v18.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v18, sizeof(emi.emi_cfg.emi_v18.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v18.emi_cfg, sizeof(emi.emi_cfg.emi_v18.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v18.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v18.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v18.emi_cfg.m_id_length);
@@ -441,7 +441,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v19.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v19, sizeof(emi.emi_cfg.emi_v19.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v19.emi_cfg, sizeof(emi.emi_cfg.emi_v19.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v19.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v19.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v19.emi_cfg.m_id_length);
@@ -469,7 +469,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v20.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v20, sizeof(emi.emi_cfg.emi_v20.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v20.emi_cfg, sizeof(emi.emi_cfg.emi_v20.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v20.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v20.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v20.emi_cfg.m_id_length);
@@ -497,7 +497,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v21.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v21, sizeof(emi.emi_cfg.emi_v21.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v21.emi_cfg, sizeof(emi.emi_cfg.emi_v21.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v21.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v21.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v21.emi_cfg.m_id_length);
@@ -525,7 +525,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v22.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v22, sizeof(emi.emi_cfg.emi_v22.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v22.emi_cfg, sizeof(emi.emi_cfg.emi_v22.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v22.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v22.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v22.emi_cfg.m_id_length);
@@ -553,7 +553,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v23.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v23, sizeof(emi.emi_cfg.emi_v23.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v23.emi_cfg, sizeof(emi.emi_cfg.emi_v23.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v23.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v23.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v23.emi_cfg.m_id_length);
@@ -581,7 +581,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v24.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v24, sizeof(emi.emi_cfg.emi_v24.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v24.emi_cfg, sizeof(emi.emi_cfg.emi_v24.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v24.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v24.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v24.emi_cfg.m_id_length);
@@ -609,7 +609,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v25.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v25, sizeof(emi.emi_cfg.emi_v25.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v25.emi_cfg, sizeof(emi.emi_cfg.emi_v25.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v25.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v25.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v25.emi_cfg.m_id_length);
@@ -637,7 +637,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v27.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v27, sizeof(emi.emi_cfg.emi_v27.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v27.emi_cfg, sizeof(emi.emi_cfg.emi_v27.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v27.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v27.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v27.emi_cfg.m_id_length);
@@ -665,7 +665,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v28.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v28, sizeof(emi.emi_cfg.emi_v28.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v28.emi_cfg, sizeof(emi.emi_cfg.emi_v28.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v28.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v28.emi_cfg.m_emmc_id));
             //dev_id.resize(emi.emi_cfg.emi_v28.emi_cfg.m_id_length);
@@ -693,7 +693,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v30.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v30, sizeof(emi.emi_cfg.emi_v30.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v30.emi_cfg, sizeof(emi.emi_cfg.emi_v30.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v30.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v30.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v30.emi_cfg.m_id_length);
@@ -721,7 +721,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v31.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v31, sizeof(emi.emi_cfg.emi_v31.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v31.emi_cfg, sizeof(emi.emi_cfg.emi_v31.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v31.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v31.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v31.emi_cfg.m_id_length);
@@ -749,7 +749,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v32.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v32, sizeof(emi.emi_cfg.emi_v32.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v32.emi_cfg, sizeof(emi.emi_cfg.emi_v32.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v32.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v32.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v32.emi_cfg.m_id_length);
@@ -777,7 +777,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v35.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v35, sizeof(emi.emi_cfg.emi_v35.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v35.emi_cfg, sizeof(emi.emi_cfg.emi_v35.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v35.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v35.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v35.emi_cfg.m_id_length);
@@ -805,7 +805,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v36.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v36, sizeof(emi.emi_cfg.emi_v36.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v36.emi_cfg, sizeof(emi.emi_cfg.emi_v36.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v36.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v36.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v36.emi_cfg.m_id_length);
@@ -833,7 +833,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v38.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v38, sizeof(emi.emi_cfg.emi_v38.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v38.emi_cfg, sizeof(emi.emi_cfg.emi_v38.emi_cfg))); //fixed_len
 
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v38.emi_cfg.m_emmc_id, sizeof(emi.emi_cfg.emi_v38.emi_cfg.m_emmc_id));
             dev_id.resize(emi.emi_cfg.emi_v38.emi_cfg.m_id_length);
@@ -864,7 +864,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v39.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v39, sizeof(emi.emi_cfg.emi_v39.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v39.emi_cfg, sizeof(emi.emi_cfg.emi_v39.emi_cfg))); //fixed_len
 
             bool is_ufs(emi.emi_cfg.emi_v39.emi_cfg.m_id_length != 0x9);//len = 0x9 = eMMC & 0xe, 0xf = eUFS
 
@@ -894,7 +894,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v46.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v46, sizeof(emi.emi_cfg.emi_v46.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v46.emi_cfg, sizeof(emi.emi_cfg.emi_v46.emi_cfg))); //fixed_len
 
             bool is_ufs(emi.emi_cfg.emi_v46.emi_cfg.m_id_length != 0x9);//len = 0x9 = eMMC & 0xe, 0xf = eUFS
 
@@ -924,7 +924,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v49.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v49, sizeof(emi.emi_cfg.emi_v49.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v49.emi_cfg, sizeof(emi.emi_cfg.emi_v49.emi_cfg))); //fixed_len
 
             bool is_ufs(emi.emi_cfg.emi_v49.emi_cfg.m_id_length != 0x9);//len = 0x9 = eMMC & 0xe, 0xf = eUFS
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v49.emi_cfg.m_ufs_id, sizeof(emi.emi_cfg.emi_v49.emi_cfg.m_ufs_id));
@@ -953,7 +953,7 @@ bool EMIParser::PrasePreloader(QIODevice &emi_dev, QVector<mtkPreloader::MTKEMII
             if (!emi.emi_cfg.emi_v51.emi_cfg.m_type)
                 continue;
 
-            emis_buff.push_back(qbyte((char*)&emi.emi_cfg.emi_v51, sizeof(emi.emi_cfg.emi_v51.emi_len))); //fixed_len
+            emi.m_emi_info = (qbyte((char*)&emi.emi_cfg.emi_v51.emi_cfg, sizeof(emi.emi_cfg.emi_v51.emi_cfg))); //fixed_len
 
             bool is_ufs(emi.emi_cfg.emi_v51.emi_cfg.m_id_length != 0x9);//len = 0x9 = eMMC & 0xe, 0xf = eUFS
             qbyte dev_id = qbyte((char*)&emi.emi_cfg.emi_v51.emi_cfg.m_ufs_id, sizeof(emi.emi_cfg.emi_v51.emi_cfg.m_ufs_id));
@@ -1048,6 +1048,8 @@ qstr EMIParser::GetEMIFlashDev(qbyte emi_buf)
             emi_dev = "MT6592/MT8127";
         if (emi_tag == "MTK_BLOADER_INFO_v20")
             emi_dev = "MT6735";
+        if (emi_tag == "MTK_BLOADER_INFO_v21")
+            emi_dev = "MT6580";
         if (emi_tag == "MTK_BLOADER_INFO_v22")
             emi_dev = "MT6755";
         if (emi_tag == "MTK_BLOADER_INFO_v25")

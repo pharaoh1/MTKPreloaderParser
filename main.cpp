@@ -39,9 +39,8 @@ int main(int argc, char *argv[])
 
         if (emi_dev.open(QIODevice::ReadOnly))
         {
-            QVector<qbyte> buff = {};
             QVector<mtkPreloader::MTKEMIInfo> emis = {};
-            EMIParser::PrasePreloader(emi_dev, emis, buff);
+            EMIParser::PrasePreloader(emi_dev, emis);
             emi_dev.close();
 
             qsizetype idx = 0;
@@ -49,8 +48,6 @@ int main(int argc, char *argv[])
                  emis.begin(); it != emis.end(); it++)
             {
                 mtkPreloader::MTKEMIInfo emi = *it;
-                qbyte emi_buff = buff.at(idx);
-
                 qInfo().noquote() << qstr("EMIInfo{%0}:%1:%2:%3:%4:%5:%6:DRAM:%7:%8").arg(emi.index,
                                                                                           emi.flash_id,
                                                                                           emi.manufacturer_id,
@@ -61,9 +58,10 @@ int main(int argc, char *argv[])
                                                                                           emi.dram_type,
                                                                                           emi.dram_size);
 
-                qInfo().noquote() << qstr("EMIInfo{%0}:version:%1:emi_content:%2").arg(emi.index, qstr::number(emi.m_emi_ver), emi_buff.toHex().data());
+                qInfo().noquote() << qstr("EMIInfo{%0}:version:%1:emi_content:%2").arg(emi.index, qstr::number(emi.m_emi_ver), emi.m_emi_info.toHex().data());
                 //!for flash tool usage , select emi by ver, cid and fw_id.
                 //!and you need to implant the whole emi structure the dramc skip method won't work, the emi settings needed for dram init.
+                //! see EMIInfoV20
                 idx++;
             }
         }
